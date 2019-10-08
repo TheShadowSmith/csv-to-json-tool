@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSV to JSON</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <section class="hero is-info is-bold">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Simple CSV to JSON converter</h1>
+                    <h2 class="subtitle is-6">Made by Shadow Smith</h2>
+                </div>
+            </div>
+        </section>
+        <div class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <div class="file is-info is-small" :class="{ 'has-name': file }">
+                                <label class="file-label">
+                                <input class="file-input" type="file" id="file" ref="file" @change="convertFile()">
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                    Upload a CSV file
+                                    </span>
+                                </span>
+                                <span v-if="file !== ''" class="file-name">
+                                    {{ file.name }}
+                                </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="jsonOutput.length > 0" class="column">
+                        <div class="is-pulled-right">
+                            <transition name="fade">
+                                <span v-if="copied" class="tag is-light">Copied</span>
+                            </transition>
+                            <button class="button is-small" @click="copyJson">
+                                <span class="file-icon">
+                                    <i class="fas fa-clipboard"></i>
+                                </span>
+                                Copy JSON to clipboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control" :class="{ 'is-loading': loading }">
+                    <textarea id="jsonData" placeholder="JSON output will be here..." class="textarea" placeholder="JSON output will be here..." rows="10" :value="jsonOutput"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
