@@ -5,7 +5,8 @@ new Vue({
            jsonOutput: "",
            file: "",
            loading: false,
-           copied: false
+           copied: false,
+           error: ""
         }
     },
     methods: {
@@ -26,7 +27,16 @@ new Vue({
                     }
                 }
             ).then(result => {
-                this.jsonOutput = JSON.stringify(result.data, undefined, 4);
+
+                if(result.data.error) {
+                    this.error = result.data.error.message
+                    setTimeout(() => {
+                        this.error = ""
+                    }, 3000)
+                } else {
+                    this.jsonOutput = JSON.stringify(result.data, undefined, 4);
+                }
+                
                 this.loading = false
             })
         },

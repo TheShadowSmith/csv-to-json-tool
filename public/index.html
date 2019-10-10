@@ -50,12 +50,13 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="jsonOutput.length > 0" class="column">
+                    <div class="column">
                         <div class="is-pulled-right">
                             <transition name="fade">
                                 <span v-if="copied" class="tag is-light">Copied</span>
+                                <span v-if="error" class="tag is-danger">{{ error }}</span>
                             </transition>
-                            <button class="button is-small" @click="copyJson">
+                            <button v-if="jsonOutput.length > 0" class="button is-small" @click="copyJson">
                                 <span class="file-icon">
                                     <i class="fas fa-clipboard"></i>
                                 </span>
